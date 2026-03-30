@@ -33,10 +33,42 @@
                     <hr class="divider">
 
                     <section class="panel-section">
-                        <h3 class="section-title">Description</h3> 
-                        <p id="lat-val"></p>
-                        <p id="lng-val"></p>
+                        <div class="live-indicator"> LIVE</div>
+                        <h3 class="section-title">Position</h3> 
+                        <div class="data-row">
+                            <span class="data-label">Latitude</span>
+                            <span id="lat-val" class="data-value"></span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Longitude</span>
+                            <span id="lng-val" class="data-value"></span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Last Updated</span>
+                            <span id="time" class="data-value"></span>
+                        </div>
                         <p id="time"></p>
+
+                        <h3 class="section-title">Orbit Data</h3> 
+                        <div class="data-row">
+                            <span class="data-label">Altitude</span>
+                            <span id="altitude-val" class="data-value"></span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Velovity</span>
+                            <span id="velocity-val" class="data-value"></span>
+                        </div>
+
+                        <h3 class="section-title">Coverage</h3>
+                        <div class="data-row">
+                            <span class="data-label">Visibility</span>
+                            <span id="visibility-val" class="data-value"></span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Coverage Radius(Earth Surface)</span>
+                            <span id="footprint-val" class="data-value"></span>
+                        </div>
+                
                         <label style="display:flex; gap:8px; align-items:center;">
                             <input type="checkbox" id="toggle-footprint">
                             Coverage Area

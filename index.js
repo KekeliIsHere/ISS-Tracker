@@ -22,7 +22,15 @@ async function getISS() {
     const lon = data.longitude;
     
 
-    return { lat, lon, timestamp: data.timestamp, footprint: data.footprint };
+    return { 
+        lat, 
+        lon, 
+        timestamp: data.timestamp,
+        footprint: data.footprint,
+        altitude: data.altitude,
+        velocity: data.velocity,
+        visibility: data.visibility
+    };
 }
 
 const issIcon=L.icon({
@@ -42,6 +50,13 @@ toSatelliteBtn.onclick = () => {
 };
 let marker;
 
+function formatLat(lat) {
+    return `${Math.abs(lat).toFixed(2)}° ${lat >= 0 ? "N" : "S"}`;
+}
+
+function formatLon(lon) {
+    return `${Math.abs(lon).toFixed(2)}° ${lon >= 0 ? "E" : "W"}`;
+}
 
 
 async function updateISS() {
@@ -49,7 +64,7 @@ async function updateISS() {
 
     if (!result) return; // stop if API failed
 
-    const { lat, lon, timestamp } = result;
+    const { lat, lon, timestamp, altitude, velocity, visibility, footprint } = result;
 
     if (!marker) {
         marker = L.marker([lat, lon],{icon: issIcon}).addTo(map);
@@ -58,7 +73,17 @@ async function updateISS() {
     }
 
     //Coverage Area
-    const radius = result.footprint * 1000; // km → meters
+    const radius = result.footprint*1000; // km → meters
+
+    //Velocity
+    const velocityKmH = velocity.toFixed(0) + " km/h";
+
+    //Altitde
+    const altitudeKm = altitude.toFixed(0) + " km";
+    //Footprint
+    const footprintKm = footprint.toFixed(0) + " km";
+    //Vsibility
+    const visibilityText = visibility === "daylight" ? "Daylight" : "Eclipse";
 
     if (showFootprint) {
         if (!footprintCircle) {
@@ -84,14 +109,19 @@ async function updateISS() {
     currentLon = lon;
   
 
-    document.getElementById("time").innerText =
-        "Last updated: " + new Date(timestamp * 1000).toLocaleTimeString();
+    document.getElementById("lat-val").innerText =formatLat(lat);
 
-    document.getElementById("lng-val").innerText=
-        "Longitude: "+lon.toFixed(2);
-    
-    document.getElementById("lat-val").innerText=
-        "Latitude: "+lat.toFixed(2);
+    document.getElementById("lng-val").innerText =formatLon(lon);
+
+    document.getElementById("time").innerText =new Date(timestamp * 1000).toLocaleTimeString();
+
+    document.getElementById("altitude-val").innerText =altitudeKm;
+
+    document.getElementById("velocity-val").innerText =velocityKmH;
+
+    document.getElementById("visibility-val").innerText =visibilityText;
+
+    document.getElementById("footprint-val").innerText =footprintKm;
 }
 
 // Footprint.
