@@ -46,7 +46,7 @@ let currentLat = 0;
 let currentLon = 0;
 
 toSatelliteBtn.onclick = () => {
-    map.setView([currentLat, currentLon]);
+     
 };
 let marker;
 
@@ -58,6 +58,9 @@ function formatLon(lon) {
     return `${Math.abs(lon).toFixed(2)}° ${lon >= 0 ? "E" : "W"}`;
 }
 
+//Orbit Path
+    let path = [];
+    let polyline = null;
 
 async function updateISS() {
     const result = await getISS();
@@ -74,16 +77,22 @@ async function updateISS() {
 
     //Coverage Area
     const radius = result.footprint*1000; // km → meters
-
     //Velocity
     const velocityKmH = velocity.toFixed(0) + " km/h";
-
     //Altitde
     const altitudeKm = altitude.toFixed(0) + " km";
     //Footprint
     const footprintKm = footprint.toFixed(0) + " km";
     //Vsibility
     const visibilityText = visibility === "daylight" ? "Daylight" : "Eclipse";
+
+
+    path.push([lat, lon]);
+    if (!polyline) {
+        polyline = L.polyline(path, { color: '#ef4444' }).addTo(map);
+    } else {
+        polyline.setLatLngs(path);
+    }
 
     if (showFootprint) {
         if (!footprintCircle) {
