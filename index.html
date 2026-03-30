@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ISS Tracker</title>  
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <link rel="stylesheet" href="styles.css">       
+         
+    </head>
+    <body>
+        <div class="dashboard-wrapper">
+            <button id="mobile-sidebar-toggle" class="mobile-toggle-btn">☰</button>
+            <div id="sidebar" class="sidebar">
+                
+                <nav class="nav-rail">
+                    <div class="nav-rail-top">
+                        <div id="sidebar-toggle" class="nav-icon toggle-btn">◀</div>
+                        
+                    </div>
+                    <div class="nav-rail-bottom">
+                        
+                    </div>
+                </nav>
+
+                <div class="sidebar-panel">
+
+                    <section class="panel-section">
+                        <h3 class="section-title">ISS Information</h3>
+                        
+                    </section>
+                    <hr class="divider">
+
+                    <section class="panel-section">
+                        <h3 class="section-title">Description</h3> 
+                        <p id="lat-val"></p>
+                        <p id="lng-val"></p>
+                        <p id="time"></p>
+                    </section>
+                </div>
+            </div>            
+
+        
+            <div id="map-area">
+                <div id="map"></div>
+                <div class="coords-panel">
+                    <div class="coords-content">
+                        <button id="moveToSatellite"><img src="icons/iss_icon.png"></button>                
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        
+        
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
+
