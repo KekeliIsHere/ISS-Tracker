@@ -22,7 +22,7 @@ async function getISS() {
     const lon = data.longitude;
     
 
-    return { lat, lon, timestamp: data.timestamp };
+    return { lat, lon, timestamp: data.timestamp, footprint: data.footprint };
 }
 
 const issIcon=L.icon({
@@ -57,6 +57,28 @@ async function updateISS() {
         marker.setLatLng([lat, lon]);
     }
 
+    //Coverage Area
+    const radius = result.footprint * 1000; // km → meters
+
+    if (showFootprint) {
+        if (!footprintCircle) {
+            footprintCircle = L.circle([lat, lon], {
+                radius: radius,
+                color: '#3b82f6',
+                weight: 1,
+                fillColor: '#3b82f6',
+                fillOpacity: 0.15
+            }).addTo(map);
+        } else {
+            footprintCircle.setLatLng([lat, lon]);
+            footprintCircle.setRadius(radius);
+        }
+    } else {
+        if (footprintCircle) {
+            map.removeLayer(footprintCircle);
+            footprintCircle = null;
+        }
+    }
 
     currentLat = lat;
     currentLon = lon;
@@ -71,6 +93,16 @@ async function updateISS() {
     document.getElementById("lat-val").innerText=
         "Latitude: "+lat.toFixed(2);
 }
+
+// Footprint.
+let footprintCircle = null;
+let showFootprint = false;
+const toggleFootprint = document.getElementById("toggle-footprint");
+
+toggleFootprint.onchange = () => {
+    showFootprint = toggleFootprint.checked;
+};
+
 
 const sidebar = document.getElementById('sidebar');
 const toggleBtn = document.getElementById('sidebar-toggle');
