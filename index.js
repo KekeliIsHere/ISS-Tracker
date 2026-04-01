@@ -46,7 +46,7 @@ let currentLat = 0;
 let currentLon = 0;
 
 toSatelliteBtn.onclick = () => {
-     
+    map.setView([currentLat, currentLon]);     
 };
 let marker;
 
