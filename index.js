@@ -88,6 +88,7 @@ async function updateISS() {
 
 
     path.push([lat, lon]);
+    
     if (!polyline) {
         polyline = L.polyline(path, { color: '#ef4444' }).addTo(map);
     } else {
